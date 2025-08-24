@@ -44,33 +44,18 @@ export default function App() {
   };
 
   const takePicture = async () => {
-    if (cameraRef.current) {
-      const photo = await cameraRef.current.takePictureAsync();
-      console.log('Photo URI:', photo?.uri);
-
-      if (photo?.uri) {
-        try {
-          const extractedText = await Vocab2CSVProcessor.processPhoto(photo.uri);
-          console.log('Vision API extracted text:', extractedText);
-
-          // Track processing request
-          setProcessingCount(prev => prev + 1);
-
-          try {
-            // Process the extracted text with OpenAI
-            const newPairs = await processVocabularyText(extractedText);
-            console.log('Processed vocabulary pairs:', newPairs);
-
-            // Add new pairs to memory
-            setVocabPairs((prev) => [...prev, ...newPairs]);
-          } finally {
-            // Always decrement processing count
-            setProcessingCount(prev => prev - 1);
-          }
-        } catch (error) {
-          console.error('Error processing photo:', error);
-        }
-      }
+    if (!cameraRef.current) return;
+    const photo = await cameraRef.current.takePictureAsync();
+    if (!photo?.uri) return;
+    setProcessingCount(prev => prev + 1);
+    try {
+      const extractedText = await Vocab2CSVProcessor.processPhoto(photo.uri);
+      const newPairs = await processVocabularyText(extractedText);
+      setVocabPairs((prev) => [...prev, ...newPairs]);
+    } catch (error) {
+      console.error('Error processing photo:', error);
+    } finally {
+      setProcessingCount(prev => prev - 1);
     }
   };
 
@@ -136,6 +121,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     minWidth: 60,
+    height: 44,
   },
   exportIcon: {
     fontSize: 20,
@@ -151,11 +137,12 @@ const styles = StyleSheet.create({
     top: 60,
     left: 100,
     backgroundColor: 'rgba(255, 165, 0, 0.8)',
-    borderRadius: 20,
-    padding: 8,
+    borderRadius: 25,
+    padding: 12,
     flexDirection: 'row',
     alignItems: 'center',
     minWidth: 50,
+    height: 44,
   },
   processingIcon: {
     fontSize: 16,
