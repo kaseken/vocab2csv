@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 
 group = 'expo.modules.vocab2csvprocessor'
-version = '0.7.2'
+version = '0.1.0'
 
 def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
 apply from: expoModulesCorePlugin
@@ -35,7 +35,7 @@ android {
   namespace "expo.modules.vocab2csvprocessor"
   defaultConfig {
     versionCode 1
-    versionName "0.7.2"
+    versionName "0.1.0"
   }
   lintOptions {
     abortOnError false

@@ -54,7 +54,7 @@ public class Vocab2CSVProcessorModule: Module {
         print("Observation \(index + 1):")
         
         for (candidateIndex, candidate) in candidates.enumerated() {
-          print("  Candidate \(candidateIndex + 1): '\(candidate.string)' (confidence: \(candidate.confidence))")
+          print("Candidate \(candidateIndex + 1): '\(candidate.string)' (confidence: \(candidate.confidence))")
         }
         
         if let topCandidate = candidates.first {
