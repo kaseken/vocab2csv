@@ -1,6 +1,7 @@
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { useRef } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Vocab2CSVProcessor from '../modules/vocab2csv-processor';
 
 export default function App() {
   const [permission, requestPermission] = useCameraPermissions();
@@ -9,8 +10,16 @@ export default function App() {
   const takePicture = async () => {
     if (cameraRef.current) {
       const photo = await cameraRef.current.takePictureAsync();
-      // TODO: Pass URL to native modules for processing.
       console.log('Photo URI:', photo?.uri); 
+      
+      if (photo?.uri) {
+        try {
+          const extractedText = await Vocab2CSVProcessor.processPhoto(photo.uri);
+          console.log('Vision API extracted text:', extractedText);
+        } catch (error) {
+          console.error('Error processing photo:', error);
+        }
+      }
     }
   };
 

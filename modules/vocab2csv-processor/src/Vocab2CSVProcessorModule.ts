@@ -6,6 +6,7 @@ declare class Vocab2CSVProcessorModule extends NativeModule<Vocab2CSVProcessorMo
   PI: number;
   hello(): string;
   setValueAsync(value: string): Promise<void>;
+  processPhoto(photoUri: string): Promise<string[]>;
 }
 
 // This call loads the native module object from the JSI.
