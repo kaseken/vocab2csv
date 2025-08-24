@@ -10,10 +10,11 @@ export default function App() {
   const [permission, requestPermission] = useCameraPermissions();
   const [vocabPairs, setVocabPairs] = useState<VocabPair[]>([]);
   const [isExporting, setIsExporting] = useState(false);
+  const [processingCount, setProcessingCount] = useState(0);
   const cameraRef = useRef<CameraView>(null);
 
   const exportToCSV = async () => {
-    if (isExporting) return; // Guard against multiple exports
+    if (isExporting || processingCount > 0) return; // Guard against multiple exports
 
     if (vocabPairs.length === 0) {
       Alert.alert('No Data', 'No vocabulary pairs to export.');
@@ -52,12 +53,20 @@ export default function App() {
           const extractedText = await Vocab2CSVProcessor.processPhoto(photo.uri);
           console.log('Vision API extracted text:', extractedText);
 
-          // Process the extracted text with OpenAI
-          const newPairs = await processVocabularyText(extractedText);
-          console.log('Processed vocabulary pairs:', newPairs);
+          // Track processing request
+          setProcessingCount(prev => prev + 1);
 
-          // Add new pairs to memory
-          setVocabPairs((prev) => [...prev, ...newPairs]);
+          try {
+            // Process the extracted text with OpenAI
+            const newPairs = await processVocabularyText(extractedText);
+            console.log('Processed vocabulary pairs:', newPairs);
+
+            // Add new pairs to memory
+            setVocabPairs((prev) => [...prev, ...newPairs]);
+          } finally {
+            // Always decrement processing count
+            setProcessingCount(prev => prev - 1);
+          }
         } catch (error) {
           console.error('Error processing photo:', error);
         }
@@ -86,10 +95,16 @@ export default function App() {
       <TouchableOpacity
         style={styles.exportButton}
         onPress={exportToCSV}
-        disabled={isExporting}>
+        disabled={isExporting || processingCount > 0}>
         <Text style={styles.exportIcon}>📋</Text>
         <Text style={styles.exportCount}>{vocabPairs.length}</Text>
       </TouchableOpacity>
+      {processingCount > 0 && (
+        <View style={styles.processingIndicator}>
+          <Text style={styles.processingIcon}>⏳</Text>
+          <Text style={styles.processingCount}>{processingCount}</Text>
+        </View>
+      )}
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.captureButton} onPress={takePicture}>
           <Text style={styles.captureText}>📷</Text>
@@ -129,6 +144,26 @@ const styles = StyleSheet.create({
   exportCount: {
     color: 'white',
     fontSize: 16,
+    fontWeight: 'bold',
+  },
+  processingIndicator: {
+    position: 'absolute',
+    top: 60,
+    left: 100,
+    backgroundColor: 'rgba(255, 165, 0, 0.8)',
+    borderRadius: 20,
+    padding: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    minWidth: 50,
+  },
+  processingIcon: {
+    fontSize: 16,
+    marginRight: 4,
+  },
+  processingCount: {
+    color: 'white',
+    fontSize: 14,
     fontWeight: 'bold',
   },
   buttonContainer: {
