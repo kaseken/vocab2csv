@@ -2,7 +2,6 @@ package expo.modules.vocab2csvprocessor
 
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
-import java.net.URL
 
 class Vocab2CSVProcessorModule : Module() {
   // Each module class must implement the definition function. The definition consists of components
@@ -14,37 +13,5 @@ class Vocab2CSVProcessorModule : Module() {
     // The module will be accessible from `requireNativeModule('Vocab2CSVProcessor')` in JavaScript.
     Name("Vocab2CSVProcessor")
 
-    // Sets constant properties on the module. Can take a dictionary or a closure that returns a dictionary.
-    Constants(
-      "PI" to Math.PI
-    )
-
-    // Defines event names that the module can send to JavaScript.
-    Events("onChange")
-
-    // Defines a JavaScript synchronous function that runs the native code on the JavaScript thread.
-    Function("hello") {
-      "Hello world! 👋"
-    }
-
-    // Defines a JavaScript function that always returns a Promise and whose native code
-    // is by default dispatched on the different thread than the JavaScript runtime runs on.
-    AsyncFunction("setValueAsync") { value: String ->
-      // Send an event to JavaScript.
-      sendEvent("onChange", mapOf(
-        "value" to value
-      ))
-    }
-
-    // Enables the module to be used as a native view. Definition components that are accepted as part of
-    // the view definition: Prop, Events.
-    View(Vocab2CSVProcessorView::class) {
-      // Defines a setter for the `url` prop.
-      Prop("url") { view: Vocab2CSVProcessorView, url: URL ->
-        view.webView.loadUrl(url.toString())
-      }
-      // Defines an event that the view can send to JavaScript.
-      Events("onLoad")
-    }
   }
 }

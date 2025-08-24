@@ -3,9 +3,6 @@ import { NativeModule, requireNativeModule } from 'expo';
 import { Vocab2CSVProcessorModuleEvents } from './Vocab2CSVProcessor.types';
 
 declare class Vocab2CSVProcessorModule extends NativeModule<Vocab2CSVProcessorModuleEvents> {
-  PI: number;
-  hello(): string;
-  setValueAsync(value: string): Promise<void>;
   processPhoto(photoUri: string): Promise<string[]>;
 }
 
