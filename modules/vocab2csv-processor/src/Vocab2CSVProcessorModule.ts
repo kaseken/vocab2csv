@@ -1,0 +1,10 @@
+import { NativeModule, requireNativeModule } from 'expo';
+
+import { Vocab2CSVProcessorModuleEvents } from './Vocab2CSVProcessor.types';
+
+declare class Vocab2CSVProcessorModule extends NativeModule<Vocab2CSVProcessorModuleEvents> {
+  processPhoto(photoUri: string): Promise<string[]>;
+}
+
+// This call loads the native module object from the JSI.
+export default requireNativeModule<Vocab2CSVProcessorModule>('Vocab2CSVProcessor');
