@@ -1,0 +1,9 @@
+{
+  "platforms": ["apple", "android", "web"],
+  "apple": {
+    "modules": ["Vocab2CSVProcessorModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.vocab2csvprocessor.Vocab2CSVProcessorModule"]
+  }
+}
