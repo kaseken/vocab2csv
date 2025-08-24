@@ -47,7 +47,7 @@ export default function App() {
     if (!cameraRef.current) return;
     const photo = await cameraRef.current.takePictureAsync();
     if (!photo?.uri) return;
-    setProcessingCount(prev => prev + 1);
+    setProcessingCount((prev) => prev + 1);
     try {
       const extractedText = await Vocab2CSVProcessor.processPhoto(photo.uri);
       const newPairs = await processVocabularyText(extractedText);
@@ -55,7 +55,7 @@ export default function App() {
     } catch (error) {
       console.error('Error processing photo:', error);
     } finally {
-      setProcessingCount(prev => prev - 1);
+      setProcessingCount((prev) => prev - 1);
     }
   };
 

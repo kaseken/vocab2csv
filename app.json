@@ -10,7 +10,7 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.vocab2csv"
+      "bundleIdentifier": "dev.kaseken.vocab2csv"
     },
     "android": {
       "adaptiveIcon": {

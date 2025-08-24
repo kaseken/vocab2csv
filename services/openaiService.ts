@@ -1,6 +1,5 @@
 import OpenAI from 'openai';
 
-// You'll need to set your OpenAI API key
 const openai = new OpenAI({
   apiKey: process.env.EXPO_PUBLIC_OPENAI_API_KEY,
 });
@@ -22,7 +21,7 @@ export async function processVocabularyText(extractedText: string[]): Promise<Vo
           content: `Instructions:
 • Extract pairs of English words <-> Japanese explanations from OCR-scanned text.
 • Correct any OCR reading errors that you identify.
-• Output Format: Return as JSON array of objects with "en" and "ja" fields/
+• Output Format: Return as JSON array of objects with "en" and "ja" fields.
 • Do not include pronunciation symbols, parts of speech, synonyms, or other supplementary information.
 
 Example output format:
@@ -43,11 +42,7 @@ ${textToProcess}`
     if (!response) {
       throw new Error('No response from OpenAI');
     }
-
-    // Parse the JSON response
-    const vocabPairs: VocabPair[] = JSON.parse(response);
-    return vocabPairs;
-
+    return JSON.parse(response) as VocabPair[];
   } catch (error) {
     console.error('Error processing vocabulary text:', error);
     throw error;
