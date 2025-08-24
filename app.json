@@ -21,12 +21,8 @@
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
-      ]
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      ],
+      "package": "dev.kaseken.vocab2csv"
     },
     "plugins": [
       "expo-router",
