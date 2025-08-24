@@ -45,13 +45,12 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <CameraView ref={cameraRef} style={styles.camera} facing="back">
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.captureButton} onPress={takePicture}>
-            <Text style={styles.captureText}>📷</Text>
-          </TouchableOpacity>
-        </View>
-      </CameraView>
+      <CameraView ref={cameraRef} style={styles.camera} facing="back" />
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.captureButton} onPress={takePicture}>
+          <Text style={styles.captureText}>📷</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -69,10 +68,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   buttonContainer: {
-    flex: 1,
+    position: 'absolute',
+    bottom: 64,
+    left: 64,
+    right: 64,
     flexDirection: 'row',
-    backgroundColor: 'transparent',
-    margin: 64,
   },
   captureButton: {
     flex: 1,
