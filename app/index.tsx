@@ -45,7 +45,7 @@ export default function App() {
 
   const takePicture = async () => {
     if (!cameraRef.current) return;
-    const photo = await cameraRef.current.takePictureAsync();
+    const photo = await cameraRef.current.takePictureAsync({ shutterSound: false });
     if (!photo?.uri) return;
     setProcessingCount((prev) => prev + 1);
     try {
