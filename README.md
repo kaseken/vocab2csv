@@ -3,7 +3,7 @@
 英単語帳のページを撮影することで、英単語と日本語訳のペア一覧をCSVファイルとして抽出できるアプリです。  
 現在、このアプリはApp StoreやGoogle Playでは公開されていません。
 
-<img width="1267" height="714" alt="vocab2csv" src="https://github.com/user-attachments/assets/ad95ae8a-12a7-4f28-bf78-625c6db4b369" />
+<img alt="vocab2csv" src="./docs/vocab2csv.png" />
 
 ## セットアップ方法
 
